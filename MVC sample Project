@@ -1,0 +1,127 @@
+src/main/java
+1.package----->3 create
+2.class---->>2(controller and model)
+3.interface------>>>Jpa
+
+//Controller
+package com.example.demowithdb2.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demowithdb2.jpa.Resp;
+import com.example.demowithdb2.model.User;
+
+@Controller
+public class HomeController {
+
+	@Autowired
+	Resp r;
+	@GetMapping("/")
+	public String get()
+	{
+		return "index";
+	}
+
+	@PostMapping("abc")
+	@Transactional
+	public String get1(User u) {
+	    r.save(u);
+	    return "result";
+	}
+	
+	
+}
+
+//jpa interface
+package com.example.demowithdb2.jpa;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demowithdb2.model.*;
+public interface Resp  extends JpaRepository<User,Integer>{
+
+}
+
+//Model
+package com.example.demowithdb2.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class User {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="id")
+	int id;	
+	@Column(name="name")	
+	String name;
+User()
+{
+super();	
+}
+	User(String name)
+	{
+		this.name=name;
+	}
+	User(int id,String name)
+	{
+		this.id=id;
+		this.name=name;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}	
+}
+Src/main/resource
+templates --->>html file
+static---->> css.file
+//index.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="abc" method="post">
+   <label>Name</label><input type="text" name="name" ><br>
+   <button>Submit</button>
+</form>
+</body>
+</html>
+
+//result.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+save successfully
+</body>
+</html>
+
+//Application
+spring.application.name=demowithdb2
+spring.datasource.url=jdbc:mysql://localhost:3306/ManBro2
+spring.datasource.username=root
+spring.datasource.password=Murali14593
+spring.jpa.hibernate.ddl-auto=update
