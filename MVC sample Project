@@ -17,16 +17,18 @@ import com.example.demowithdb2.model.User;
 
 @Controller
 public class HomeController {
-
+	//autowired --only one time object create
 	@Autowired
 	Resp r;
+	//get--->opening
 	@GetMapping("/")
 	public String get()
 	{
+		//index is html.file
 		return "index";
 	}
-
-	@PostMapping("abc")
+	//submitdata(where you can send pannu)
+	@PostMapping("/abc")
 	@Transactional
 	public String get1(User u) {
 	    r.save(u);
@@ -41,6 +43,8 @@ package com.example.demowithdb2.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demowithdb2.model.*;
+///user---->model name(modelfile)
+//interger----->first datatype
 public interface Resp  extends JpaRepository<User,Integer>{
 
 }
@@ -63,6 +67,7 @@ public class User {
 	int id;	
 	@Column(name="name")	
 	String name;
+//Contruction injection
 User()
 {
 super();	
@@ -76,6 +81,7 @@ super();
 		this.id=id;
 		this.name=name;
 	}
+//Getter and setter injection(rightclick--->source---->getter and setter)
 	public int getId() {
 		return id;
 	}
